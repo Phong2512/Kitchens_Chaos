@@ -2,58 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearCounter : MonoBehaviour, IKitchenObjectParent
+public class ClearCounter : BaseCounter
 {
-    [SerializeField] private KitchenObjectSO kitchenObjectSO;
-    [SerializeField] private Transform counterTopPoint;
-    /*[SerializeField] private ClearCounter secondClearCounter;
-    [SerializeField] private bool testing;
-*/
-    private KitchenObject kitchenObject;
 
-   /* private void Update()
+    [SerializeField] private KitchenObjectSO kitchenObjectSO;
+
+
+
+    public override void Interact(Player player)
     {
-        if (testing && Input.GetKeyDown(KeyCode.T))
+        if (!HasKitchenObject())
         {
-            if (kitchenObject != null)
+            if (player.HasKitchenObject())
             {
-                kitchenObject.SetKitchenObjectParent(secondClearCounter);
+                player.GetKitchenObject().SetKitchenObjectParent(this);
             }
-        }
-    }*/
-    public void Interact(Player player)
-    {
-        if (kitchenObject == null)
-        {
-            Transform kitchenObjectTranform = Instantiate(kitchenObjectSO.prefab, counterTopPoint);
-            kitchenObjectTranform.GetComponent<KitchenObject>().SetKitchenObjectParent(this);
+            else
+            {
+
+            }
         }
         else
         {
-            kitchenObject.SetKitchenObjectParent(player);
-            
+            if (player.HasKitchenObject())
+            {
+
+            }
+            else
+            {
+                GetKitchenObject().SetKitchenObjectParent(player);
+            }
         }
     }
-
-    public Transform GetKitchenObjectFollowTransform()
-    {
-        return counterTopPoint;
-    }
-
-    public void SetKichenObject(KitchenObject kitchenObject)
-    {
-        this.kitchenObject = kitchenObject;
-    }
-
-    public KitchenObject GetKitchenObject() { return kitchenObject; }
-
-    public void ClearKitchenObject()
-    {
-        this.kitchenObject = null;
-    }
-
-    public bool HasKitchenObject()
-    {
-        return this.kitchenObject != null;
-    }
 }
+
+   
+
